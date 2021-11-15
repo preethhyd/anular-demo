@@ -27,11 +27,13 @@ jobs:
           npm run build --prod
         working-directory: .
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
         with:
-          name: node-app
-          path: .
+         app-name: 'hello-world-app-to-delete'
+         slot-name: 'production'
+         publish-profile: $
+         package: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,5 +53,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'angular-demo-project'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_911EED1A6ED24D849751E1838302EEDF }}
+          publish-profile: $
           package: ./dist/hello-world-app
